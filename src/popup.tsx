@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import './style.css';
 
 const Popup = () => {
   const [count, setCount] = useState(0);
@@ -34,13 +35,13 @@ const Popup = () => {
 
   return (
     <>
-      <ul style={{ minWidth: "700px" }}>
+      <ul className="min-w-[700px]">
         <li>Current URL: {currentURL}</li>
         <li>Current time: {new Date().toLocaleTimeString()}</li>
       </ul>
       <button
         onClick={() => setCount(count + 1)}
-        style={{ marginRight: "5px" }}
+        className="mr-1"
       >
         count up
       </button>
