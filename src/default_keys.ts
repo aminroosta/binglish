@@ -7,7 +7,7 @@ export const defaultKeys = [
       alt: true,
       command: false,
       shift: false,
-      key: 'r'
+      code: 'KeyD'
     }
   },
   {
@@ -18,7 +18,9 @@ export const defaultKeys = [
       alt: false,
       command: true,
       shift: true,
-      key: 'r'
+      code: 'KeyR'
     }
   }
 ];
+
+export type Key = typeof defaultKeys[0];
