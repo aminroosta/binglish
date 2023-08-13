@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Session } from "./session";
+import { KeyBindings } from "./keybindings";
 import './style.css';
 
 const Tab = (p: { onClick?: () => void, children: any, active: boolean }) => {
@@ -48,7 +49,12 @@ const Popup = () => {
         </Tab>
         <div className="box-border border-b border-gray-300 h-full w-full"></div>
       </div>
-      <Session />
+      <div className={activeTab == 0 ? "" : "hidden"}>
+        <Session />
+      </div>
+      <div className={activeTab == 1 ? "" : "hidden"}>
+        <KeyBindings />
+      </div>
     </div>
   );
 };
