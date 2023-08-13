@@ -4,9 +4,9 @@ export const defaultKeys = [
     template: 'Rewrite the following message: {{text}}',
     keys: {
       ctrl: true,
-      alt: true,
+      alt: false,
       command: false,
-      shift: false,
+      shift: true,
       code: 'KeyD'
     }
   },
@@ -18,7 +18,7 @@ export const defaultKeys = [
       alt: false,
       command: true,
       shift: true,
-      code: 'KeyR'
+      code: 'KeyU'
     }
   }
 ];

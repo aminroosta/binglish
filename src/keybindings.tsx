@@ -21,13 +21,12 @@ const Model = (p: { modalKey: Key, setModalKey: Function, onSave: Function }) =>
     keys.alt && "Alt",
     keys.command && "Command",
     keys.shift && "Shift",
-    keys.code.replace(/Key|Digit/, '')
+    keys.code.replace(/Key|Digit|Arrow/, '')
   ]
     .filter(x => x)
     .join(' + ');
   const onKeyDown = (e: React.KeyboardEvent) => {
-    const code = e.code?.replace(/Key|Digit/, '');
-    if (code && /^[a-zA-Z0-9]$/.test(code)) {
+    if (e.code && /Key|Digit|Arrow/.test(e.code)) {
       p.setModalKey({
         ...p.modalKey,
         keys: {
@@ -61,6 +60,7 @@ const Model = (p: { modalKey: Key, setModalKey: Function, onSave: Function }) =>
             ref={input}
             value={value}
             onKeyDown={onKeyDown}
+            onChange={() => { }}
             className="h-8 border border-neutral-100 outline-sky-700 px-2 rounded-sm text-center"
           ></input>
           <div className="font-semibold mt-2"> Name: </div>
@@ -175,7 +175,7 @@ export const KeyBindings = () => {
               {key.keys.alt && <BoxedKey>Alt</BoxedKey>}
               {key.keys.command && <BoxedKey>Command</BoxedKey>}
               {key.keys.shift && <BoxedKey>Shift</BoxedKey>}
-              {key.keys.code && <BoxedKey>{key.keys.code.replace(/Key|Digit/, '')}</BoxedKey>}
+              {key.keys.code && <BoxedKey>{key.keys.code.replace(/Key|Digit|Arrow/, '')}</BoxedKey>}
             </td>
             <td className="w-14 text-right pr-1">
               <Icon src="edit.svg" onClick={() => onEdit(key, idx)} />
