@@ -6,13 +6,6 @@ export class BingChat {
   protected _cookie: string
   protected _debug: boolean
 
-  ready: Promise<void>;
-
-  protected _ready : {
-    resolve?: () => void,
-    reject?: (reason?: any) => void
-  }
-
   constructor(opts: {
     cookie: string
 
@@ -23,13 +16,6 @@ export class BingChat {
 
     this._cookie = cookie
     this._debug = !!debug
-
-    // TODO: refactor this to ResolvablePromise
-    this._ready = {};
-    this.ready = new Promise((resolve, reject) => {
-      this._ready.resolve = resolve;
-      this._ready.reject = reject;
-    });
 
     if (!this._cookie) {
       throw new Error('Bing cookie is required')
@@ -90,7 +76,6 @@ export class BingChat {
     const responseP = new Promise<types.ChatMessage>(
       async (resolve, reject) => {
         const chatWebsocketUrl = 'wss://sydney.bing.com/sydney/ChatHub'
-        const ws = new WebSocket(chatWebsocketUrl);
         // const ws = new WebSocket(chatWebsocketUrl, {
         //   perMessageDeflate: false,
         //   headers: {
@@ -100,11 +85,13 @@ export class BingChat {
         //   }
         // })
 
+        const ws = new WebSocket(chatWebsocketUrl)
+
         let isFulfilled = false
 
         function cleanup() {
           ws.close()
-          ws.onopen = ws.onclose = ws.onerror = ws.onmessage = () => { };
+          ws.onopen = ws.onclose = ws.onerror = ws.onmessage = null
         }
 
         ws.onerror = (error) => {
@@ -116,7 +103,6 @@ export class BingChat {
           }
         };
         ws.onclose = () => {
-          console.log('WebSocket closed')
           // TODO
         };
 
@@ -216,7 +202,6 @@ export class BingChat {
             ws.send(`${JSON.stringify(params)}${terminalChar}`)
 
             ++stage
-            this._ready.resolve();
             return
           }
 
@@ -331,6 +316,7 @@ export class BingChat {
       }
     })
   }
+
 
   genTraceId(): string {
     const array = new Uint8Array(16)

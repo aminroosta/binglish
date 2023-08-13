@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { onConnect } from "./actions";
 export const Session = () => {
   const [cookie, setCookie] = useState("");
 
@@ -33,7 +34,7 @@ export const Session = () => {
 
     <button className="mt-2 bg-sky-700 text-white rounded-sm px-2 py-1"
       onClick={() => {
-        chrome.action.setIcon({ path: "vm-pending.png" });
+        onConnect(cookie);
       }}
     >Connect</button>
   </div>;
