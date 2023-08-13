@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { Session } from "./session";
 import './style.css';
-
-const Session = () => { return "Todo: Session" };
-const KeyBindings = () => { return "Todo: KeyBindings" };
 
 const Tab = (p: { onClick?: () => void, children: any, active: boolean }) => {
   return <div className={[
@@ -50,7 +48,7 @@ const Popup = () => {
         </Tab>
         <div className="box-border border-b border-gray-300 h-full w-full"></div>
       </div>
-      TODO: Popup
+      <Session />
     </div>
   );
 };
