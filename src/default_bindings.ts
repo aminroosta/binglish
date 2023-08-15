@@ -13,9 +13,9 @@ export const defaultBindings = [
   {
     name: 'Rewrite message',
     template: [
-      'Imagine you are copywriter.',
-      'As a copywriter your task is to rewrite sample text messages.',
-      'Try to reuse the same words and stay as close to the original text.',
+      'Imagine you are a copywriter.',
+      'As a copywriter your task is to rewrite text messages.',
+      'Try to reuse the same words and to stay as close as possible to the original text.',
       'Reply back with the rewritten text only.',
       'Here is the first such message to rewrite:',
       '',

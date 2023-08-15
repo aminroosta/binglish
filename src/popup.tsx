@@ -31,29 +31,29 @@ const Popup = () => {
   return (
     <div className="min-w-[700px]">
       <div className="h-8 bg-neutral-100 flex">
-        <Tab
-          active={activeTab === 0}
-          onClick={() => {
-            setActiveTab(0);
-            chrome.storage.local.set({ activeTab: 0 });
-          }}>
-          <img src="symbol-keyword.svg" className="mr-2" />
-          Session
-        </Tab>
-        <Tab active={activeTab == 1} onClick={() => {
-          setActiveTab(1);
-          chrome.storage.local.set({ activeTab: 1 });
+        <Tab active={activeTab == 0} onClick={() => {
+          setActiveTab(0);
+          chrome.storage.local.set({ activeTab: 0 });
         }}>
           <img src="record-keys.svg" className="mr-2" />
           Key Bindings
         </Tab>
+        <Tab
+          active={activeTab === 1}
+          onClick={() => {
+            setActiveTab(1);
+            chrome.storage.local.set({ activeTab: 1 });
+          }}>
+          <img src="symbol-keyword.svg" className="mr-2" />
+          Session
+        </Tab>
         <div className="box-border border-b border-gray-300 h-full w-full"></div>
       </div>
       <div className={activeTab == 0 ? "" : "hidden"}>
-        <Session />
+        <KeyBindings />
       </div>
       <div className={activeTab == 1 ? "" : "hidden"}>
-        <KeyBindings />
+        <Session />
       </div>
     </div>
   );

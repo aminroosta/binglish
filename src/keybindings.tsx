@@ -155,37 +155,39 @@ export const KeyBindings = () => {
   };
 
   return <div className="p-2">
-    <table className="w-full min-h-[300px] select-none">
-      <thead className="h-8 bg-neutral-100">
-        <tr className="text-left border-b border-gray-300">
-          <th className="px-2">Name</th>
-          <th className="px-2">Keybinding</th>
-          <th className=""></th>
-        </tr>
-      </thead>
-      <tbody>
-        {keys.map((key, idx) => {
-          return <tr
-            key={idx}
-            className={"group hover:bg-neutral-200 " + (idx % 2 ? "bg-zinc-100" : "")}
-          >
-            <td className="h-6 p-2 border-r border-gray-300">{key.name}</td>
-            <td className="h-6 px-2 border-r border-gray-300">
-              {key.keys.ctrl && <BoxedKey>Ctrl</BoxedKey>}
-              {key.keys.alt && <BoxedKey>Alt</BoxedKey>}
-              {key.keys.command && <BoxedKey>Command</BoxedKey>}
-              {key.keys.shift && <BoxedKey>Shift</BoxedKey>}
-              {key.keys.code && <BoxedKey>{key.keys.code.replace(/Key|Digit|Arrow/, '')}</BoxedKey>}
-            </td>
-            <td className="w-14 text-right pr-1">
-              <Icon src="edit.svg" onClick={() => onEdit(key, idx)} />
-              <Icon src="chrome-close.svg" onClick={() => onRemove(idx)} />
-            </td>
+    <div className="h-52 overflow-scroll">
+      <table className="w-full select-none">
+        <thead className="h-8 bg-neutral-100">
+          <tr className="text-left border-b border-gray-300">
+            <th className="px-2">Name</th>
+            <th className="px-2">Keybinding</th>
+            <th className=""></th>
           </tr>
-        })}
-        <tr></tr>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {keys.map((key, idx) => {
+            return <tr
+              key={idx}
+              className={"group hover:bg-neutral-200 " + (idx % 2 ? "bg-zinc-100" : "")}
+            >
+              <td className="h-6 p-2 border-r border-gray-300">{key.name}</td>
+              <td className="h-6 px-2 border-r border-gray-300">
+                {key.keys.ctrl && <BoxedKey>Ctrl</BoxedKey>}
+                {key.keys.alt && <BoxedKey>Alt</BoxedKey>}
+                {key.keys.command && <BoxedKey>Command</BoxedKey>}
+                {key.keys.shift && <BoxedKey>Shift</BoxedKey>}
+                {key.keys.code && <BoxedKey>{key.keys.code.replace(/Key|Digit|Arrow/, '')}</BoxedKey>}
+              </td>
+              <td className="w-14 text-right pr-1">
+                <Icon src="edit.svg" onClick={() => onEdit(key, idx)} />
+                <Icon src="chrome-close.svg" onClick={() => onRemove(idx)} />
+              </td>
+            </tr>
+          })}
+          <tr></tr>
+        </tbody>
+      </table>
+    </div>
 
     <div>
       <button
