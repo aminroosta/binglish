@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Binding, defaultKeys } from "./default_keys";
+import { Binding, defaultBindings } from "./default_bindings";
 
 const BoxedKey = (p: { children: any }) => (
   <div
@@ -103,7 +103,7 @@ export const KeyBindings = () => {
   const [keys, setKeys] = useState([] as Binding[]);
   useEffect(() => {
     chrome.storage.local.get(['keys'], (result) => {
-      setKeys(result.keys ?? defaultKeys);
+      setKeys(result.keys ?? defaultBindings);
     });
   }, []);
 

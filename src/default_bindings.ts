@@ -1,4 +1,15 @@
-export const defaultKeys = [
+export const defaultBindings = [
+  {
+    name: 'Chat',
+    template: '{{text}}',
+    keys: {
+      ctrl: true,
+      alt: false,
+      command: false,
+      shift: true,
+      code: 'KeyJ'
+    }
+  },
   {
     name: 'Rewrite message',
     template: [
@@ -20,7 +31,7 @@ export const defaultKeys = [
   },
   {
     name: 'Define word',
-    template: 'Define the following word: {{text}}',
+    template: 'Define "{{text}}"',
     keys: {
       ctrl: false,
       alt: false,
@@ -31,4 +42,4 @@ export const defaultKeys = [
   }
 ];
 
-export type Binding = typeof defaultKeys[0];
+export type Binding = typeof defaultBindings[0];

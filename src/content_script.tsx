@@ -1,9 +1,8 @@
 import { onBindingTriggered } from "./actions";
-import { Binding, defaultKeys } from "./default_keys";
+import { Binding, defaultBindings } from "./default_bindings";
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   if (message.type == 'onProgress') {
-    console.log(message.text);
     const target = document.getElementById(message.id);
     if (
       target instanceof HTMLInputElement ||
@@ -18,7 +17,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
 let bindings = [] as Binding[];
 chrome.storage.local.get(['keys'], (result) => {
-  bindings = result.keys ?? defaultKeys;
+  bindings = result.keys ?? defaultBindings;
 });
 
 chrome.storage.onChanged.addListener((changes, _namespace) => {
@@ -42,12 +41,12 @@ window.addEventListener("keydown", async (e) => {
       const text = target?.value || target?.innerText || "";
       if (text) {
         target.id = Math.random().toString(36).substr(2, 9);
-        let response = await onBindingTriggered(
+        console.log("Matched: " + binding.name);
+        let _response = await onBindingTriggered(
           binding.template,
           text,
           target.id
         );
-        console.log("Matched: " + binding.name);
       }
     }
   }
