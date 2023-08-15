@@ -5,7 +5,7 @@ export const Session = () => {
 
   useEffect(() => {
     chrome.storage.local.get(['cookie'], (result) => {
-      setCookie(result.cookie ?? 0);
+      setCookie(result.cookie ?? '');
     });
   }, []);
 

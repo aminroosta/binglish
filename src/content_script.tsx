@@ -3,6 +3,7 @@ import { Binding, defaultKeys } from "./default_keys";
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   if (message.type == 'onProgress') {
+    console.log(message.text);
     const target = document.getElementById(message.id);
     if (
       target instanceof HTMLInputElement ||
