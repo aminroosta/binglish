@@ -155,7 +155,7 @@ export const KeyBindings = () => {
   };
 
   return <div className="p-2">
-    <div className="h-52 overflow-scroll">
+    <div className="h-80 overflow-scroll">
       <table className="w-full select-none">
         <thead className="h-8 bg-neutral-100">
           <tr className="text-left border-b border-gray-300">

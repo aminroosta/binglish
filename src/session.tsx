@@ -34,7 +34,7 @@ export const Session = () => {
 
     <textarea
       className={[
-        "w-full h-44 p-2 bg-neutral-100 rounded-sm",
+        "w-full h-72 p-2 bg-neutral-100 rounded-sm",
         "border border-gray-300 outline-sky-700"
       ].join(' ')}
       ref={inputRef}
