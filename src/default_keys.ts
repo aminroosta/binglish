@@ -1,7 +1,15 @@
 export const defaultKeys = [
   {
     name: 'Rewrite message',
-    template: 'Rewrite the following message: {{text}}',
+    template: [
+      'Imagine you are copywriter.',
+      'As a copywriter your task is to rewrite sample text messages.',
+      'Try to reuse the same words and stay as close to the original text.',
+      'Reply back with the rewritten text only.',
+      'Here is the first such message to rewrite:',
+      '',
+      '"{{text}}"',
+    ].join('\n'),
     keys: {
       ctrl: true,
       alt: false,
@@ -23,4 +31,4 @@ export const defaultKeys = [
   }
 ];
 
-export type Key = typeof defaultKeys[0];
+export type Binding = typeof defaultKeys[0];

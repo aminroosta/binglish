@@ -1,18 +1,21 @@
-import { Key, defaultKeys } from "./default_keys";
+import { onBindingTriggered } from "./actions";
+import { Binding, defaultKeys } from "./default_keys";
 
-chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
-  if (msg.color) {
-    console.log("Receive color = " + msg.color);
-    document.body.style.backgroundColor = msg.color;
-    sendResponse("Change color to " + msg.color);
-  } else {
-    sendResponse("Color message is none.");
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+  if (message.type == 'onProgress') {
+    const target = document.getElementById(message.id);
+    if (
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement
+    ) {
+      target.value = message.text;
+    } else {
+      target.innerText = message.text;
+    }
   }
 });
 
-console.log("Hello from your Chrome extension!");
-
-let bindings = [] as Key[];
+let bindings = [] as Binding[];
 chrome.storage.local.get(['keys'], (result) => {
   bindings = result.keys ?? defaultKeys;
 });
@@ -25,7 +28,7 @@ chrome.storage.onChanged.addListener((changes, _namespace) => {
   }
 });
 
-window.addEventListener("keydown", function(e) {
+window.addEventListener("keydown", async (e) => {
   for (const binding of bindings) {
     if (
       binding.keys.code === e.code &&
@@ -34,7 +37,17 @@ window.addEventListener("keydown", function(e) {
       binding.keys.shift === e.shiftKey &&
       binding.keys.alt === e.altKey
     ) {
-      console.log("Matched: " + binding.name);
+      const target = e.target as any;
+      const text = target?.value || target?.innerText || "";
+      if (text) {
+        target.id = Math.random().toString(36).substr(2, 9);
+        let response = await onBindingTriggered(
+          binding.template,
+          text,
+          target.id
+        );
+        console.log("Matched: " + binding.name);
+      }
     }
   }
 });

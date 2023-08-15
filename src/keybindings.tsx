@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Key, defaultKeys } from "./default_keys";
+import { Binding, defaultKeys } from "./default_keys";
 
 const BoxedKey = (p: { children: any }) => (
   <div
@@ -12,7 +12,7 @@ const BoxedKey = (p: { children: any }) => (
   </div>
 );
 
-const Model = (p: { modalKey: Key, setModalKey: Function, onSave: Function }) => {
+const Model = (p: { modalKey: Binding, setModalKey: Function, onSave: Function }) => {
   const input = React.createRef<HTMLInputElement>();
   const keys = p.modalKey.keys;
   console.log(p.modalKey);
@@ -98,9 +98,9 @@ const Model = (p: { modalKey: Key, setModalKey: Function, onSave: Function }) =>
 
 
 export const KeyBindings = () => {
-  const [modalKey, setModalKey] = useState(null as Key | null);
+  const [modalKey, setModalKey] = useState(null as Binding | null);
   const [modalKeyIndex, setModalKeyIndex] = useState(-1);
-  const [keys, setKeys] = useState([] as Key[]);
+  const [keys, setKeys] = useState([] as Binding[]);
   useEffect(() => {
     chrome.storage.local.get(['keys'], (result) => {
       setKeys(result.keys ?? defaultKeys);
@@ -115,7 +115,7 @@ export const KeyBindings = () => {
       <img src={p.src} className="inline" />
     </div>;
 
-  const onEdit = (key: Key, idx: number) => {
+  const onEdit = (key: Binding, idx: number) => {
     setModalKey(key);
     setModalKeyIndex(idx);
   };

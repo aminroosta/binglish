@@ -112,7 +112,7 @@ export class BingChat {
         let stage = 0
 
         ws.onmessage = (data) => {
-          const objects = data.toString().split(terminalChar)
+          const objects = data.data.split(terminalChar)
 
           const messages = objects
             .map((object) => {

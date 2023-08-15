@@ -1,12 +1,17 @@
 import { BingChat } from "./bing-chat";
 import { ConversationResult } from "./types";
 
+chrome.storage.local.get(['cookie'], (result) => {
+  if(result.cookie) {
+    setUp(result.cookie);
+  }
+});
+
 let api: BingChat | null = null;
 let conv: ConversationResult | null = null;
 async function setUp(cookie: string) {
   api = new BingChat({ cookie: cookie })
   chrome.action.setIcon({ path: "/vm-pending.png" });
-  console.log("setting up ...");
   try {
     conv = await api.createConversation();
     chrome.action.setIcon({ path: "/vm-active.png" });
@@ -16,30 +21,35 @@ async function setUp(cookie: string) {
   }
 }
 
+
 chrome.runtime.onMessage.addListener(
-  (request, sender, sendResponse) => {
+  async (request, sender, sendResponse) => {
     if (request.type === "onConnect") {
-      sendResponse({ farewell: "goodbye" });
-      setUp(request.cookie);
+      try {
+        sendResponse({ farewell: "goodbye" });
+        await setUp(request.cookie);
+        sendResponse({ result: "success" });
+      } catch (e) {
+        console.error(e);
+        sendResponse({ error: e.toString() });
+      }
+    }
+    if (request.type = 'onBindingTriggered') {
+      const prompt = request.template.replace('{{text}}', request.text);
+      api.sendMessage(prompt, {
+        // conversationId: conv?.conversationId,
+        onProgress: (partial) => {
+          chrome.tabs.sendMessage(
+            sender.tab.id,
+            {
+              type: "onProgress",
+              text: partial.text,
+              id: request.id
+            });
+        }
+      });
+      console.log(request);
+      sendResponse({ result: "success" });
     }
   }
 );
-
-// chrome.runtime.onConnect.addListener(function(port) {
-//   console.assert(port.name === "binding");
-//   port.onMessage.addListener(function(msg) {
-//     if (msg.joke === "Knock knock")
-//       port.postMessage({ question: "Who's there?" });
-//     else if (msg.answer === "Madame")
-//       port.postMessage({ question: "Madame who?" });
-//     else if (msg.answer === "Madame... Bovary")
-//       port.postMessage({ question: "I don't get it." });
-//   });
-// });
-
-//   await api.sendMessage(prompt, {
-//     onProgress: (partial) => {
-//       // console.clear()
-//       console.log(partial.text)
-//     }
-//   });
